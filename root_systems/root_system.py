@@ -17,7 +17,7 @@ class RootSystem:
             image = np.dot(self.points, random_vector)
             # Check if there are no zeros, the margin 0.01
             # is there to prevent floating point errors
-            if np.all(abs(image) > 0.01):
+            if np.all(abs(image) > 0.02):
                 return random_vector
 
     def positive_roots(self, vector: np.ndarray) -> np.ndarray:
@@ -56,12 +56,15 @@ class RootSystem:
 
         def check_edge(edge) -> bool:
             i, j, weight = edge[0], edge[1], edge[2]
+            print((edge, dots[i, i], dots[j, j]))
             if i == j or weight in {0, 4}:
                 return False
+            if weight == 1:
+                return True
             if i > j:
                 return dots[i, i] >= dots[j, j]
-            if i < j:
-                return dots[j, j] >= dots[i, i]
+            # if i < j:
+            #     return dots[j, j] >= dots[i, i]
             return False
 
         all_edges = [
